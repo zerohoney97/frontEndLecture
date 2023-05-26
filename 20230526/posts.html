@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <style>
+    body{
+    }
+    .post-container{
+      width: 500px;
+      height: 500px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .post{
+      margin: 20px;
+    }
+  </style>
+  <body>
+    <div class="post-container"></div>
+    <a href="http://127.0.0.1:5500/20230526/write.html">글 쓰러가기</a>
+  </body>
+  <script>
+    const getData = async () => {
+      const data = await axios.get("http://127.0.0.1:8080/posts", {
+        withCredentials: true,
+      });
+      console.log(data);
+      return data;
+    };
+    const renderView = async () => {
+      const { data } = await getData();
+      console.log(data)
+      data.forEach((a) => {
+        document.querySelector(".post-container").innerHTML+= `<div class='post'> 
+    <div class='title'>title:${a.title} </div>
+     <div class='writer'>writer:${a.writer}</div> 
+     <div class='content'>content:${a.content}</div>
+     <a href='http://127.0.0.1:8080/posts/update/${a.id}'> 글 수정 </a>
+     <a href='http://127.0.0.1:8080/posts/del/${a.id}'> 글 삭제 </a>
+      </div>`;
+      });
+    };
+    renderView();
+  </script>
+</html>
