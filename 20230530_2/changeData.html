@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h1>change profile</h1>
+    <label for="">nickname</label>
+    <input type="text" id="username" />
+    <label for="">id</label>
+    <input type="text" id="user_id" />
+    <label for="">nickname</label>
+    <input type="file" name="profile" id="img" />
+    <button id="changeBtn">change</button>
+  </body>
+  <script>
+    changeBtn.onclick = () => {
+      const form = new FormData();
+
+      form.append("username", username.value);
+      form.append("user_id", user_id.value);
+      form.append("profile", img.files[0]);
+
+      axios
+        .post("http://127.0.0.1:8080/signUp/changeUserProfile", form, {
+          withCredentials: true,
+          "Content-Type": "multipart/form-data",
+        })
+        .then((e) => {
+          console.log(e);
+          window.location.href =
+            "http://127.0.0.1:5500/20230530_2/userProfile.html";
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+  </script>
+</html>

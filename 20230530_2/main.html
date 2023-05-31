@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <label for="">name</label>
+    <input type="text" id="username" />
+    <label for="">id</label>
+    <input type="text" id="user_id" />
+    <label for="">password</label>
+    <input type="password" id="user_pw" />
+    <label for="">profile image</label>
+    <input type="file" id="img" />
+    <button id="signUpBtn">signUp</button>
+  </body>
+  <script>
+    signUpBtn.onclick = () => {
+      const form = new FormData();
+      form.append("user_id", user_id.value);
+      form.append("user_pw", user_pw.value);
+      form.append("username", username.value);
+      form.append("profile", img.files[0]);
+
+      console.log(user_id.value);
+      axios
+        .post("http://127.0.0.1:8080/signUp", form, {
+          "Content-Type": "multipart/form-data",
+        })
+        .then((e) => {
+          window.location.href =
+            "http://127.0.0.1:5500/20230530_2/login.html";
+          console.log(e, "성공");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+  </script>
+</html>

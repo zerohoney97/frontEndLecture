@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    ㅎㅇ
+    <h1 id="name"></h1>
+    <h1 id="user_id"></h1>
+    <img src="" alt="profile" id="user_img" />
+    <a href="http://127.0.0.1:8080/signUp/changeUserProfile">프로필 변경하기</a>
+  </body>
+  <script>
+    window.onload = () => {
+      axios
+        .get("http://127.0.0.1:8080/signUp/getAllUserInfo", {
+          withCredentials: true,
+        })
+        .then((e) => {
+          const { data } = e;
+          name.innerText = data.username;
+          user_id.innerText = data.user_id;
+          user_img.src=`http://127.0.0.1:8080/img/${data.img}`
+          console.log(e);
+        })
+        .catch((err) => {
+          console.log(e);
+        });
+    };
+  </script>
+</html>
