@@ -1,0 +1,6 @@
+.App {
+  display: flex;
+}
+.block {
+  border: 1px solid;
+}
