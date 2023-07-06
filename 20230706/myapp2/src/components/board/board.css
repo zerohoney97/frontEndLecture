@@ -1,0 +1,187 @@
+.board-container {
+  width: 70vw;
+  height: 90vh;
+  margin: auto;
+  border: 2px solid #ddd;;
+}
+
+.board-header-conainer {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-body-container {
+  width: 100%;
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.board-body-top-container {
+  width: 100%;
+  height: 10%;
+}
+
+.board-body-top-container ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+.board-body-top-container ul .isComplete {
+  width: 6%;
+}
+.board-body-top-container ul .number {
+  width: 12%;
+}
+
+.board-body-top-container ul .title {
+  width: 70%;
+}
+.board-body-top-container ul .writer {
+  width: 20%;
+}
+
+.board-body-content-container ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.board-body-content-container ul .isComplete {
+  width: 6%;
+  cursor: pointer;
+}
+
+.board-body-content-container ul .number {
+  width: 12%;
+}
+
+.board-body-content-container ul .title {
+  width: 70%;
+}
+.board-body-content-container ul .writer {
+  width: 20%;
+}
+
+.check-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.check-mark {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #55c35d;
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.check-mark::before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: #ffffff;
+  transform: rotate(45deg);
+  top: 4px;
+  left: 7px;
+}
+
+.check-mark::after {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 8px;
+  border-width: 0 0 2px 2px;
+  border-style: solid;
+  border-color: #ffffff;
+  transform: rotate(45deg);
+  top: 6px;
+  left: 12px;
+}
+
+.board-body-content-container ul .isComplete.checked .check-mark {
+  transform: scale(1);
+}
+
+.board-footer-container {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.post-registration-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #3897f0;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.post-registration-button i {
+  margin-right: 8px;
+}
+
+
+
+.apple-toggle {
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 30px;
+}
+
+.apple-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.apple-toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 30px;
+  background-color: #d4d4d4;
+  transition: background-color 0.3s;
+}
+
+.apple-toggle-slider:before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+}
+
+.apple-toggle input[type="checkbox"]:checked + .apple-toggle-slider {
+  background-color: #55c35d;
+}
+
+.apple-toggle input[type="checkbox"]:checked + .apple-toggle-slider:before {
+  transform: translateX(30px);
+}
