@@ -8,18 +8,23 @@ import {
   UserInputContainer,
 } from "./SignUp.syled";
 import { useNavigate } from "react-router-dom";
-import { userMiddleWareFunction } from "../../../middleware";
-import { useDispatch } from "react-redux";
+import axios from "axios";
 const SignUp = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [nickName, setNickName] = useState("");
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const signUpDispatch = (id, pw, nickName) => {
+  const signUpDispatch = async (id, pw, nickName) => {
     console.log("asd");
-    dispatch(userMiddleWareFunction.signUp({ id, pw, nickName }));
+    await axios
+      .post("http://localhost:8080/login/save", { id, pw, nickName })
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -52,7 +57,7 @@ const SignUp = () => {
       <SignUpBtn
         onClick={() => {
           signUpDispatch(id, pw, nickName);
-          navigate('/login')
+          navigate("/login");
         }}
       >
         SignUp!

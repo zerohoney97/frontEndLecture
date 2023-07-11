@@ -8,7 +8,7 @@ let userInfo = {
 const reducer = (state = userInfo, action) => {
   const { type, payload } = action;
   switch (type) {
-    case "SIGNUP":
+    case "LOGIN":
       return {
         ...state,
         id: payload.id,

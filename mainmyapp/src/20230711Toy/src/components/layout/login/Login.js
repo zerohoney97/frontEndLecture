@@ -8,17 +8,15 @@ import {
   UserInputContainer,
 } from "./Login.styled";
 import { useNavigate } from "react-router-dom";
-import{userMiddleWareFunction} from '../../../middleware'
+import { userMiddleWareFunction } from "../../../middleware";
 import { useDispatch } from "react-redux";
 const Login = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loginDispatch = (id, pw, nickName) => {
-    console.log("asd");
-    dispatch(userMiddleWareFunction.Login({ id, pw }));
-    navigate("/login");
+  const loginDispatch = (id, pw,) => {
+    dispatch(userMiddleWareFunction.login({ id, pw }));
   };
 
   return (
@@ -43,6 +41,7 @@ const Login = () => {
       <LoginBtn
         onClick={() => {
           loginDispatch(id, pw);
+          navigate("/main");
         }}
       >
         Login!

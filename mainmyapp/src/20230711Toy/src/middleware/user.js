@@ -1,26 +1,30 @@
 import axios from "axios";
-const signUp = (data) => {
+
+const login = (data) => {
   return async (dispatch) => {
-
-    console.log("디스패치ㅁㄴㅇ");
-    await axios
-      .post("http://localhost:8080/login/save", data)
-      .then(() => {
-        console.log("저장성공");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    const userData = await axios.get(
+      "http://localhost:8080/login/getUserData",
+      {
+        params: {
+          data,
+        },
+      }
+    );
+    console.log(userData);
     dispatch({
-      type: "SIGNUP",
-      payload: { id: data.id, pw: data.pw, nickName: data.nickName },
+      type: "LOGIN",
+      payload: {
+        id: userData.data.user_id,
+        pw: userData.data.user_pw,
+        nickName: userData.data.user_nickname,
+        isLogin: true,
+      },
     });
   };
 };
 
 const userMiddleWareFunction = {
-  signUp,
+  login,
 };
 
 export default userMiddleWareFunction;
