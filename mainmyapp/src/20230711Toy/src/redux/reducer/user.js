@@ -1,6 +1,5 @@
 let userInfo = {
   id: "",
-  pw: "",
   nickName: "",
   isLogin: false,
 };
@@ -12,8 +11,8 @@ const reducer = (state = userInfo, action) => {
       return {
         ...state,
         id: payload.id,
-        pw: payload.pw,
         nickName: payload.nickName,
+        isLogin:true
       };
 
     default:
