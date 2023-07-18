@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    function primeFactor(n) {
+      let primeArr = [];
+      let resArr = [];
+      for (let index = 1; index <= n; index++) {
+        if (n % index == 0) {
+          primeArr.push(index);
+        }
+      }
+      primeArr.forEach((el) => {
+        if (isPrime(el)) {
+          resArr.push(el);
+        }
+      });
+      return resArr.join(',');
+    }
+    console.log(primeFactor(72));
+
+    function isPrime(n) {
+      let res = true;
+      for (let index = 2; index < n; index++) {
+        if (n % index == 0) {
+          res = false;
+        }
+      }
+      if (n == 1) {
+        res = false;
+      }
+      return res;
+    }
+
+    console.log(isPrime(31));
+    console.log(isPrime(10));
+  </script>
+</html>

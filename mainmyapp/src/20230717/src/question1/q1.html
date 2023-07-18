@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="one">one</div>
+    <div id="two">two</div>
+  </body>
+  <script>
+    // 이미 변수 two를 선언하였고 메모리에 참조 하였으므로 할당이 되었고, 함수가 실행 할 때 그 할당된 값을 계속 불러오는 것이다.
+    // 즉,bom에선 사라졌지만 dom에선 메모리에 계속 잔존해 있는것이다. 이를 해결하기 위해서 코드를 다음과 같이 수정하였다.
+    // const one = document.querySelector("#one");
+    // const two = document.querySelector("#two");
+    // one.addEventListener("click", () => {
+    //   two.remove();
+    //   console.log(two);
+    // });
+
+
+    // 이렇게 수정하면 클릭시 동적으로 two를 메모리에 할당하여 지역변수화 시켰다. 이렇게 되면 two는 함수 실행 후 메모리에서 제거된다.
+    const one = document.querySelector("#one");
+    one.addEventListener("click", () => {
+      const two = document.querySelector("#two");
+      if (two) {
+        two.remove();
+        console.log(two);
+      } else {
+        console.log("two는 삭제되었습니다.");
+      }
+    });
+  </script>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function commonElements(kArray) {
+        let res = [];
+        let shortestArr = kArray[0];
+        for (let index = 0; index < kArray.length - 1; index++) {
+          if (index.length > kArray[index + 1].length) {
+            shortestArr = kArray[index + 1];
+          }
+        }
+        shortestArr.forEach((el) => {
+          let isContain = true;
+          kArray.forEach((kEl) => {
+            if (kEl.includes(el)) {
+            } else {
+              isContain = false;
+            }
+          });
+
+          if (isContain) {
+            res.push(el);
+          }
+        });
+
+        return res;
+      }
+
+      console.log(
+        commonElements([
+          [1, 2, 3, 4, 5, 6, 7],
+          [1, 2, 3, 4, 5, 6, 7],
+          [1, 2, 3, 4, 5, 6, 7],
+          [1, 2, 3, 4, 5, 6, 7],
+          [1,2,3,4,7]
+        ])
+      );
+    </script>
+  </body>
+</html>

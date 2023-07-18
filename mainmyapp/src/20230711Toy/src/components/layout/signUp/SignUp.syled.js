@@ -21,6 +21,7 @@ const SignUpConatiner = styled.div`
 const UserInputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const Label = styled.label`
@@ -55,6 +56,13 @@ const SignUpBtn = styled.button`
   }
 `;
 
+const AlertReg = styled.div`
+  color: red;
+  font-size: 14px;
+  position: absolute;
+  bottom: -40px;
+`;
+
 export {
   IdInput,
   Label,
@@ -62,4 +70,5 @@ export {
   SignUpBtn,
   SignUpConatiner,
   UserInputContainer,
+  AlertReg
 };

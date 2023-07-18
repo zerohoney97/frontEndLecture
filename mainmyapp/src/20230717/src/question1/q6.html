@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    let wordTemp = "appleelppa";
+    let palindromeArr = [];
+    function isPalindromeRecursive(word) {
+      return isPalindromeRecursiveHelper(word, 0, word.length - 1);
+    }
+
+    function isPalindromeRecursiveHelper(word, beginPos, endPos) {
+      if (beginPos == endPos) {
+        palindromeArr.push(word[beginPos]);
+
+        console.log(palindromeArr.join(""));
+        if (word == palindromeArr.join("")) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        palindromeArr.push(word[endPos]);
+        return isPalindromeRecursiveHelper(word, beginPos, endPos - 1);
+      }
+    }
+    console.log(isPalindromeRecursive(wordTemp));
+  </script>
+</html>

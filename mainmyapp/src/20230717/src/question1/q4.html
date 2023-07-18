@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    const resArr = [];
+    function base10ToString(n) {
+      if (n == 1) {
+        resArr.splice(0, 0, n);
+        console.log(resArr);
+        return resArr.join('');
+      } else {
+        let base = n % 2;
+        let tempN = parseInt(n / 2);
+        resArr.splice(0, 0, base);
+        return base10ToString(tempN);
+      }
+    }
+    console.log(base10ToString(100));
+  </script>
+</html>

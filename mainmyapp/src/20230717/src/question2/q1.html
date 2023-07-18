@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    const arr = "97 86 77 75 62 97 86 97 97 97";
+    const newArr = arr.split(" ");
+    function answer(arr) {
+      let count = 0;
+      let isOne = true;
+      const newArr = arr.split(" ");
+      newArr.sort();
+      console.log(newArr);
+      for (let index = 0; index < 3; index++) {
+        let standard = newArr[0];
+        let validateFirstMax = newArr[0];
+        let tempCount = 0;
+        let arrLength = newArr.length;
+        for (let index2 = 1; index2 < arrLength; index2++) {
+          if (newArr[index2] > standard) {
+            standard = newArr[index2];
+            tempCount = 0;
+          } else if (newArr[index2] == standard) {
+            tempCount++;
+          }
+        }
+        tempCount++;
+        newArr.splice(arrLength - tempCount, tempCount);
+        console.log(newArr);
+        console.log(tempCount);
+        count += tempCount;
+      }
+      return count;
+    }
+
+    console.log(answer(arr));
+  </script>
+</html>
