@@ -26,6 +26,43 @@ const App = () => {
     index,
     setIndex,
   };
+  function dfs(graph, node, visited, component) {
+    visited[node] = true;
+    component.push(node);
+    console.log(visited);
+
+    for (const neighbor of graph[node]) {
+      if (!visited[neighbor]) {
+        dfs(graph, neighbor, visited, component);
+      }
+    }
+  }
+
+  function findConnectedComponents(graph) {
+    const visited = {};
+    const connectedComponents = [];
+
+    for (const node in graph) {
+      if (!visited[node]) {
+        const component = [];
+        dfs(graph, node, visited, component);
+        connectedComponents.push(component);
+      }
+    }
+
+    return connectedComponents;
+  }
+
+  // Example usage:
+  const adjacencyList = {
+    1: [2, 3, 4],
+    2: [4],
+    3: [4],
+  };
+
+  const connectedComponents = findConnectedComponents(adjacencyList);
+  console.log(connectedComponents);
+
   return (
     <TodoObj.Provider value={todoObj}>
       {isModal ? (
