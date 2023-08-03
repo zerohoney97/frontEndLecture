@@ -9,55 +9,55 @@ const Main = ({ account, nftInfo2 }) => {
     try {
       if (!account) return;
       const res = await mintJusticeTokenContract.methods
-        .mintJusticeToken(
-          "goldeHammer",
-          "2017도17494",
-          "살인",
-          "2017-07-30 13:00",
-          "징역2년 집행유예3년"
-        )
-        .mintJusticeToken(
-          "goldeHammer",
-          "2015도15101",
-          "강간",
-          "2015-07-31 13:30",
-          "징역1년 집행유예2년"
-        )
-        .mintJusticeToken(
-          "goldeHammer",
-          "2016도13362",
-          "강도",
-          "20201618-07-30 9:00",
-          "징역3년 집행유예1년"
-        )
-        .mintJusticeToken(
-          "goldeHammer",
-          "2015노1180",
-          "살인",
-          "2015-01-30 18:00",
-          "징역10년 집행유예4년"
-        )
-        .mintJusticeToken(
-          "goldeHammer",
-          "2022노3417",
-          "특수상해",
-          "2022-02-04 13:00",
-          "징역5년 집행유예1년"
-        )
-        .mintJusticeToken(
-          "goldeHammer",
-          "2017도17494",
-          "살인",
-          "2017-07-30 13:00",
-          "징역7년 집행유예1년"
-        )
-        .mintJusticeToken(
-          "goldeHammer",
-          "2017도17494",
-          "살인",
-          "2017-07-30 13:00",
-          "징역2년 집행유예1년"
-        )
+        // .mintJusticeToken(
+        //   "goldeHammer",
+        //   "2017도17494",
+        //   "살인",
+        //   "2017-07-30 13:00",
+        //   "징역24개월 집행유예36개월"
+        // )
+        // .mintJusticeToken(
+        //   "goldeHammer",
+        //   "2015도15101",
+        //   "강간",
+        //   "2015-07-31 13:30",
+        //   "징역12개월 집행유예24개월"
+        // )
+        // .mintJusticeToken(
+        //   "goldeHammer",
+        //   "2016도13362",
+        //   "강도",
+        //   "20201618-07-30 9:00",
+        //   "징역36개월 집행유예12개월"
+        // )
+        // .mintJusticeToken(
+        //   "goldeHammer",
+        //   "2015노1180",
+        //   "살인",
+        //   "2015-01-30 18:00",
+        //   "징역120개월 집행유예48년"
+        // )
+        // .mintJusticeToken(
+        //   "goldeHammer",
+        //   "2022노3417",
+        //   "특수상해",
+        //   "2022-02-04 13:00",
+        //   "징역60개월 집행유예12개월"
+        // )
+        // .mintJusticeToken(
+        //   "goldeHammer",
+        //   "2017도17494",
+        //   "살인",
+        //   "2017-07-30 13:00",
+        //   "징역84개월 집행유예12개월"
+        // )
+        // .mintJusticeToken(
+        //   "goldeHammer",
+        //   "2017도17494",
+        //   "살인",
+        //   "2017-07-30 13:00",
+        //   "징역24개월 집행유예12개월"
+        // )
         .mintJusticeToken(
           "goldeHammer",
           "2015도15101",
