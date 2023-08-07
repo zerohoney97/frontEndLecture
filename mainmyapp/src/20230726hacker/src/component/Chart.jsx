@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 const Chart = ({ account, nftArr }) => {
-  const casenum = "2017도17494";
+  const casenum = "2017도17492";
   const [selectedCase, setSelectesCase] = useState([]);
   //   징역모음
   //   const [imprisonment, setImprisonment] = useState([]);
