@@ -10,12 +10,12 @@ import {
 import ToDo from "./ToDo";
 import { Body } from "./toDopop.styled";
 import ToDoPop from "./ToDoPop";
+import axios from 'axios'
 const ToDoList = () => {
   const { todo, setTodo, isModal, setIsModal } = useContext(TodoObj);
   const modalHandler = () => {
     setIsModal(!isModal);
   };
-
   const todoListHandler = useMemo(() => {
     return todo.map((el, index) => {
       return <ToDo index={index}></ToDo>;

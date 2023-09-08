@@ -7,7 +7,8 @@
     "baseUrl": ".",
     "paths": {
       // baseurl 경로 부털 별칭
-      "@core/*":["20230904/02.Block/src/core/*"]
+      "@core/*":["20230904/02.Block/src/core/*"],
+      "@coreChain/*":["20230904/03.chain/src/core/*"]
     }
 
   },
