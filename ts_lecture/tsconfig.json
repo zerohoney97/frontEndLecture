@@ -11,6 +11,7 @@
       "@coreChain/*":["20230904/03.chain/src/core/*"],
       "@coreP2P/*":["20230904/04.p2p/src/core/*"],
       "@coreWallet/*":["20230904/05.wallet/src/core/*"],
+      "@coreTransaction/*":["20230904/06.transaction/src/core/*"],
 
     }
 
