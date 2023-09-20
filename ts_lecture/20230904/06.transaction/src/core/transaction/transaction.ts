@@ -9,6 +9,7 @@ import {
 } from "./transaction.interface";
 import { SignatureInput } from "elliptic";
 import { SHA256 } from "crypto-js";
+import Unspent from "./unspent";
 
 // 보내는 사람의 타입 구조 정의
 class Sender {
@@ -17,7 +18,7 @@ class Sender {
 
 // 영수증
 // 누가 누구에게 보냈는지의 내용을 가지고 있는 객체구조 정의
-class Receipt {
+export class Receipt {
   sender: Sender; //보내는 사람의 정보
   received: string; //받는 사람의 계정
   amount: number; //보낸 금액
@@ -111,7 +112,7 @@ class Transaction {
   ) {
     // amount 받은 사람의 금액(얼마를 받았는지)
     // sendAmount 보낸사람의 잔액
-    console.log(received, amount, sendAmount, sender);
+    // console.log(received, amount, sendAmount, sender);
     const txOuts: TxOut[] = [];
     // txOut 받는사람, 얼마를 받았는지
     // 이에 대한 객체 생성
@@ -127,7 +128,6 @@ class Transaction {
     const outAmount = txOuts.reduce((acc, txOut: TxOut) => {
       return acc + txOut.amount;
     }, 0);
-    console.log(outAmount, sendAmount);
     // 전체 금액 검증
     // 내가 가지고 있는 금액에서
     // 보낸값과 내가 다시 남은 잔액이
@@ -201,7 +201,7 @@ class Transaction {
     txOutId?: string,
     signature?: SignatureInput
   ): TxIn {
-    // 단순하게 입력 투랜잭션 생성
+    // 단순하게 입력 트랜잭션 생성
     const txIn = new TxIn();
     txIn.txOutIndex = txOutIndex;
     txIn.txOutId = txOutId;
@@ -211,7 +211,7 @@ class Transaction {
   createTxOut(account: string, amount: number): TxOut {
     //받는 계정 주소랑 출력 트랜잭션 생성
     if (account.length !== 40) {
-      new Error("정상적인 계좌가 아닙니다.");
+      throw new Error("정상적인 계좌가 아닙니다.");
     }
     const txOut = new TxOut();
     txOut.account = account;
@@ -220,22 +220,27 @@ class Transaction {
   }
 
   //   트랜잭션 pool 업데이트
-  update(transaction: TransactionRow) {
+  update(transaction: TransactionRow, utxo: Unspent) {
     const findCallBack = (tx: TransactionRow) => transaction.hash == tx.hash;
     const index = this.transactionPool.findIndex(findCallBack);
     if (index !== -1) {
       console.log("업데이트 완");
+      // 트랜잭션이 대기목록에서 사라졌으므로 해당하는 UTXO데이터를 업데이트
+      utxo.update(this.transactionPool[index]);
+      console.log(this.transactionPool[index]);
       this.transactionPool.splice(index, 1);
     }
   }
 
   //   트랜잭션 목록 업데이트
-  sync(transaction: TransactionData) {
+  sync(transaction: TransactionData, utxo: Unspent) {
     if (typeof transaction === "string") {
       return;
     }
 
-    transaction.forEach(this.update.bind(this));
+    transaction.forEach((transaction: TransactionRow) => {
+      this.update(transaction, utxo);
+    });
   }
 }
 

@@ -1,14 +1,14 @@
-// // 테스트 코드를 작성하면 시간이 오래걸리지만
-// // 코드의 품질을 좀 더 올릴 수 있다.
-// //  단위별로 테스트를 진행해서 디버깅을 하고 코드를 작성할 수 있기 때문에
+// 테스트 코드를 작성하면 시간이 오래걸리지만
+// 코드의 품질을 좀 더 올릴 수 있다.
+//  단위별로 테스트를 진행해서 디버깅을 하고 코드를 작성할 수 있기 때문에
 
-// // 1단계 코드를 2단계 코드를 실행하고 설치적으로 테스트를 우리가 진행을 해볼수가 있다.
+// 1단계 코드를 2단계 코드를 실행하고 설치적으로 테스트를 우리가 진행을 해볼수가 있다.
 
-// import Block from "@coreP2P/block/block";
-// import { GENESIS } from "@coreP2P/config";
-// import Chain from "@coreP2P/block/chain";
+// import Block from "@coreTransaction/block/block";
+// import { GENESIS } from "@coreTransaction/config";
+// import Chain from "@coreTransaction/block/chain";
 // //describe:테스트 들의 그룹화 그룹을 지정할 수 있다.
-// // 첫번째는 그룹의 명 이름, 어떤 테스트 그룹인지
+// // 첫번째는 그룹의 명 이름, 어떤 테스트 그룹인지채
 // // 두번째 매개변수로 테스트 들을 실행시키는 콜백함수
 // // describe("block 테스트 코드 그룹", () => {
 // // 하나의 테스트 단위, 첫번째 매개변수에는 테스트 이름 명
@@ -240,30 +240,151 @@
 //     console.log("지갑주소:", `0x${address}`);
 //   });
 // });
-
-import Transaction from "@coreTransaction/transaction/transaction";
+import Block from "@coreTransaction/block/block";
+import { GENESIS } from "@coreTransaction/config";
+import Chain from "@coreTransaction/block/chain";
+import Transaction, { Receipt } from "@coreTransaction/transaction/transaction";
+import Unspent from "@coreTransaction/transaction/unspent";
+import fs from "fs";
+import path from "path";
+import { SHA256 } from "crypto-js";
+import elliptic from "elliptic";
+import { TransactionRow } from "@coreTransaction/transaction/transaction.interface";
+import { randomBytes } from "crypto";
+const ec = new elliptic.ec("secp256k1");
 
 describe("Transaction", () => {
-  let transaction: Transaction;
+  let transaction = new Transaction();
+  let unspent = new Unspent();
+  // 받는사람
+  let account =
+    "0xf618459cac99394eb1c3ae683f017b5ded65d7bfc680d8794fc5e4c3da6e2719d04c9a72f6847e8ba6d50799e9f1b84df9e2bb7e";
+  // 보내는 사람
+  let sender =
+    "0x2df7adb954c3aafe08e4fa97b242404d4047b7e8a7c45f64b92f9cafc31d130e4598391378f7be20b94689203e5da4c37e58debb";
+  let newChain: Chain;
+  let newBlock: Block;
+  let signature: elliptic.ec.Signature;
+  let tempTransaction: TransactionRow;
 
+  // sender의 공개키
+  let senderPublicKey: string;
+  // account의 공개키
+  let accountPublicKey: string;
   // 테스트 케이스 실행전에 실행되는 코드
 
-  beforeEach(() => {
-    transaction = new Transaction();
-  });
+  beforeEach(() => {});
 
   describe("createTxOut", () => {
     const account = "0".repeat(40);
-    it("txOut생성", () => {
-      // 임시 보내는 값
-      const amount = 40;
-      // 트랜잭션 객체를 사용
-      // txOut 객체 하나 생성
-      const txOut = transaction.createTxOut(account, amount);
-      console.log(txOut);
-      expect(txOut.account).toBe(account);
-      expect(txOut.amount).toBe(amount);
-    });
-    
+    // it("txOut생성", () => {
+    //   // 임시 보내는 값
+    //   const amount = 40;
+    //   // 트랜잭션 객체를 사용
+    //   // txOut 객체 하나 생성
+    //   const txOut = transaction.createTxOut(account, amount);
+    //   console.log(txOut);
+    //   expect(txOut.account).toBe(account);
+    //   expect(txOut.amount).toBe(amount);
+    // });
+  });
+
+  // 제네시스 블록 추가
+  it("블록 추가", () => {
+    const data = ["임시 페페1"];
+    newBlock = Block.generateBlock(GENESIS, data, GENESIS);
+  });
+
+  // 해당 블록 체인에 추가
+  it("블록 체인 추가", () => {
+    newChain = new Chain();
+    newChain.addToChain(newBlock);
+    // console.log(newChain.getBlockByHash(newBlock.hash));
+  });
+
+  it("블록 채굴", () => {
+    let block = Block.generateBlock(
+      newChain.latestBlock(),
+      [`block`],
+      newChain.getAdjustmentBlock()
+    );
+    newChain.addToChain(block);
+    const dir = path.join(__dirname, "..", "..", "data");
+    const filename = path.join(dir, sender);
+    const fileContent = fs.readFileSync(filename);
+    const priveKey = fileContent.toString();
+    const keyPair = ec.keyFromPrivate(priveKey);
+    // 트루로 줌으로서 38자로 압축
+    senderPublicKey = keyPair.getPublic().encode("hex", true);
+    sender = senderPublicKey.slice(26).toString();
+    // 임시 트랜잭션 내용
+    const hash = SHA256("transaction data").toString();
+    // sign 서명 생성
+    signature = keyPair.sign(hash, "hex");
+    // 채굴 성공했으니 보상 트랜잭션 생성 (코인 베이스 생성)
+    const coinBase = transaction.createCoinBase(sender, 0);
+    // 트랜잭션 생성했으니 UTXO에 저장하자.
+    unspent.update(coinBase);
+    console.log(unspent.unspent);
+  });
+
+  it("코인 거래", () => {
+    // 보내는 사람에 해당하는 UTXO객체생성
+    const senderUTXOObj = unspent.getUTXO(sender);
+    const dir = path.join(__dirname, "..", "..", "data");
+    const filename = path.join(dir, account);
+    const fileContent = fs.readFileSync(filename);
+    const priveKey = fileContent.toString();
+    const keyPair = ec.keyFromPrivate(priveKey);
+    // 트루로 줌으로서 38자로 압축
+    accountPublicKey = keyPair.getPublic().encode("hex", true);
+    account = accountPublicKey.slice(26).toString();
+
+    // 영수증 생성
+    const receipt: Receipt = {
+      sender: { account: sender },
+      received: account,
+      amount: 20,
+      signature,
+    };
+    // 트랜잭션 풀에 추가
+    tempTransaction = transaction.create(receipt, senderUTXOObj);
+    console.log(transaction.getPool, "송금 시작");
+  });
+
+  it("채굴 후 account에 코인 송금", () => {
+    // 블록 채굴
+    let block = Block.generateBlock(
+      newChain.latestBlock(),
+      [`block2`],
+      newChain.getAdjustmentBlock()
+    );
+    newChain.addToChain(block);
+
+    const accountCoinBase = transaction.createCoinBase(
+      account,
+      newChain.length()
+    );
+    unspent.update(accountCoinBase);
+    console.log(unspent.getUTXO(account));
+    const hash = SHA256("transaction data").toString();
+    // 서명 검증
+    const verify = ec.verify(
+      hash,
+      signature,
+      ec.keyFromPublic(senderPublicKey, "hex")
+    );
+    if (verify) {
+      transaction.sync([tempTransaction], unspent);
+
+      const senderObjArr = unspent.getUTXO(sender);
+      console.log("보낸사람의 잔액은:", unspent.getAmount(senderObjArr));
+      const accountObjArr = unspent.getUTXO(account);
+      console.log("받은사람의 잔액은:", unspent.getAmount(accountObjArr));
+    } else {
+      throw new Error("잘못된 서명입니다!");
+    }
+
+    console.log(transaction.getPool, "송금 종료");
   });
 });

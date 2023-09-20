@@ -1,6 +1,6 @@
 // 지갑 서버
 import express from "express";
-import Wallet from "@coreWallet/wallet/index";
+import Wallet from "@coreTransaction/wallet/index";
 import path from "path";
 import fs from "fs";
 

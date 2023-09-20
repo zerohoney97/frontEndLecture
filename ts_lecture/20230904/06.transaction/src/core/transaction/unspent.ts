@@ -28,7 +28,7 @@ class Unspent {
 
   //   get UTXO의 내용을 반환하는 함수
 
-  public get value(): UnspentTxOutPool {
+  public get unspent(): UnspentTxOutPool {
     return this.unspentTxOuts;
   }
 
@@ -83,9 +83,8 @@ class Unspent {
     //   사용한 객체 제거
     // UTXO목록에서 사용한 객체들은 제거
     // bind 현재 작성된 위치의 객체를 참조F
-    txIns.forEach(this.delete.bind(this));
+    txIns.forEach((this.delete.bind(this)));
   }
-
   //   특정 계정 (account)에 객체를 UTXO에서 목록을 조회
   getUTXO(account: string): UnspentTxOut[] {
     // 계정의 잔액의 정보를 가지고 있는 객체를 모두 조회하는 함수
