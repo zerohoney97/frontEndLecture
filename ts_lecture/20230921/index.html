@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  </head>
+  <body></body>
+  <script>
+    // RPC통신을 편하게 사용할 수 있게 도와주는 web3 라이브러리
+    // 이더리움 재단에서 지원한다.
+    const web3 = new Web3("http://127.0.0.1:8545");
+    web3.eth
+      .getBalance("0x3b380287cdcfDF8ca3fba3DE45c22f10464d4fBa")
+      .then((data) => {
+        const value = web3.utils.fromWei(data, "ether");
+        console.log(value);
+      });
+
+    // web3.eth
+    //   .sendTransaction({
+    //     from: "0x3b380287cdcfDF8ca3fba3DE45c22f10464d4fBa",
+    //     to: "0xf905cdF5F42C107C6c7BE30974dC370fc8149513",
+    //     // 10eth=>wei 단위로 변환
+    //     value: web3.utils.toWei("10", "ether"),
+    //   })
+    //   .then(console.log);
+
+    web3.eth
+      .getBalance("0xf905cdF5F42C107C6c7BE30974dC370fc8149513")
+      .then((data) => {
+        const value = web3.utils.fromWei(data, "ether");
+        console.log(value, "받은사람");
+      });
+
+    //   CA를 생성
+    // solidity를 스마트 컨트랙트 배포
+    web3.eth
+      .sendTransaction({
+        from: "0x3b380287cdcfDF8ca3fba3DE45c22f10464d4fBa",
+        gas: "1000000",
+        data: "60806040523480156100115760006000fd5b505b5b610019565b61016b806100286000396000f3fe60806040523480156100115760006000fd5b506004361061003b5760003560e01c80632096525514610041578063552410771461005f5761003b565b60006000fd5b61004961007b565b60405161005691906100f2565b60405180910390f35b610079600480360381019061007491906100b7565b61008d565b005b6000600060005054905061008a565b90565b8060006000508190909055505b5056610134565b6000813590506100b081610119565b5b92915050565b6000602082840312156100ca5760006000fd5b60006100d8848285016100a1565b9150505b92915050565b6100eb8161010e565b82525b5050565b600060208201905061010760008301846100e2565b5b92915050565b60008190505b919050565b6101228161010e565b811415156101305760006000fd5b5b50565bfea2646970667358221220ca7aa1d5d15134dfbbbd0720377b1f7584ea3fbee4b95779d11b7b0fe266723064736f6c63430008000033",
+      })
+      .then((data) => {
+        console.log(data);
+      });
+
+    //   CA:"0xbB02E5A6CD02b702159C7Ce9eAB88AB52A06f984"
+    // CA에 매핑되어있는 코드가 활성화 되고 컨트랙트 코드가 실행된다.
+
+    // call 과 send
+
+    // 트랜잭션을 발생시킬때는 send
+    // 조회를 알 때에는 call값을 조회
+  </script>
+</html>
