@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Web3 from "web3";
-
+import Lotto from "./Lotto";
 function App() {
   // 브루우저에서 이더리움 블록체인 상호작용
   // 브라우저에서 메타마스크 확장 프로그램을 통해 네트워크에 상호작용을 할 수 있다.
@@ -156,6 +156,8 @@ function App() {
         <button onClick={addCounter}>증가</button>
         {/* <button onClick={counterAdd}>증가</button>  */}
       </div>
+
+      <Lotto web3={web3} account={account} />
     </div>
   );
 }
