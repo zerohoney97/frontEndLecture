@@ -184,7 +184,151 @@ contract Counter{
     // 1.public : 외부에서 호출이 가능 외부 컨트랙트나 계정에서 호출 가능 EOA나 CA에서 호출이 가능하다는 얘기
     // 2. private: 컨트랙트 내부(함수 등)에서만 접근 가능
     // 3.Internal:내부 함수는 컨트랙트에서 접근을 할 수 있고 외부x =>다른 컨트랙트에서 상속받아서는 호출 가능하다.
+    // 4.External: public같은 타입
 
+    // 접근 지정자
+    // view 부분: 상태변수 변경 선언 솔리디티 언어의 특징
+    // view : 상태변수 읽기전용 변경은 불가능하다.
+    // pure: 상태변수 읽기도 안되고 변경도 x=> 말 그대로 순수라게 전달받은 매개변수로만 함수의 동작을 하고싶은 경우에 사용
+    // payable: 결제를 처리할 수 있다는 선언,이더를 전송하는데 선언을 하지 않으면 거부된다.
+
+    // 조건문 작성
+    // require:주어진 조건을 검사해서 만족이 되면 구문 통과 reject발생 이전 상태로 되돌림
+    // gas 반환
+    // if문 같이 사용 조건처리를 할 때 사용
+    require(조건문);
+    통과시 실행시킬 구문
+
+
+    // 컨트랙트 배포자가
+    // 계약을 파기하고싶을 때
+    // sender 배포자의 주소를 받을 변수 이더를 전송받을 수 있다.
+
+    address payable CaDeployersender;
+
+    require(msg.sender== CaDeployersender)
+    // selfdestruct
+    selfdestruct(CaDeployersender);
+    // selfdestruct(지갑 계정):현재 계약을 파기하고, 전달받은 매개변수 주소로 CA의 잔액을 전송한다.
+
+    // selfdestruct(CA 주소): 계약을 파기하고 전달된 CA에 잔액을 전송할 수 있다.
 
 }
+```
+
+#Truffle
+
+- Dapps 개발을 쉽게 개발할 수 있도록 도와주는 프레임워크
+- 스마트 컨트랙트 컴파일,배포 및 테스트 기능을 쉽게 할 수 있도록 도와준다.
+
+- 리액트 설치
+
+```sh
+
+# 트러플 설치
+npm i truffle
+npx truffle init
+```
+
+- npx truffle init 을 하면 초기 세팅 => 3개의 폴더가 생김
+
+1. contracts:솔리디티 코드를 작성한 sol파일들을 담을 폴더 컴파일을 진행하면 이 폴더에 잇는 sol파일을 읽어서 컴파일을 진행한다.
+   build 폴더가 생기고 컴파일된 내용이 json파일로 생성된다.
+
+2. migrations: 컨트랙트 배포를 진행할 js코드 작성 이더리움 네트워크에 배포하는 내용을 작성할 js를 이 폴더에
+
+3. test:테스트 파일을 작성할 폴더
+
+- truffle-config.js
+  module.exports = {
+  networks: {
+  development: {
+  host: "127.0.0.1", // Localhost (default: none)
+  port: 8545, // Standard Ethereum port (default: none)
+  network_id: "\*", // Any network (default: none)
+  },
+  },
+
+  // Set default mocha options here, use special reporters, etc.
+  mocha: {
+  // timeout: 100000
+  },
+
+  // Configure your compilers
+  compilers: {
+  solc: {
+  version: "0.8.21", // Fetch exact version from solc-bin (default: truffle's version)
+  },
+  },
+  };
+
+# 컴파일
+
+- 솔리디티 코드 작성하자 contracts폴더에 sol 파일을 만들자
+- 컴파일 명령어
+
+```sh
+npx truffle compile
+
+```
+
+- build 폴더가 생기고 컴파일된 내용이 생성된 json파일에 작성 되어 있다.
+
+# 배포
+
+가나쉬 키자
+
+- ganache-cli
+
+```sh
+npx ganache-cli
+
+```
+
+- migrations 폴더안에 배포 코드 작성
+
+- 파일명의 규칙있다.
+- 파일명:[번호]_[내용]_[컨트랙트이름].js 파일로 이름 작성
+- 1_deploy_Counter.js 이렇게 이름 작성
+
+- 트러플로 배포 마이그레이션폴더에 있는 파일명으로 대조하여 배포
+
+```sh
+npx truffle compile
+npx truffle migrate
+```
+
+- 배포한 CA확인후
+- 0x8e38f0A568CD3Aa1551D26b4834492248a6bb3e6
+- CA로 요청을 보내서 call send를 통해 원격 프로시져 실행 가능
+
+```sh
+npx truffle-console console
+
+```
+
+- 콘솔창에 코드를 작성해서 call send를 테스트 해볼 수 있다.
+
+```javascript
+// Counter라는 컨트렉트가 배포괸것에서 마지막으로 배포된 컨트랙트를 접근
+// 접근하는 동안 비동기 처리
+// instance === 배포한 Counter 컨트랙트에 접근해서 인스턴스를 매개변수로 받음
+// counter 변수를 선언하고 instance를 담아준다.
+Counter.deployed().then((instance) => (counter = instance));
+
+// counter 배포된 컨트랙트의 인스턴스가 담겨있고 call과 send가 메서드로 포함되어 있다.
+counter.getValue();
+// BN 객체는 매우 큰 숫자를 명시 매우 큰 숫자를 다룰 때 사용된다.
+// call 요청을 보내자
+// BN { negative: 0, words: [ 0, <1 empty item> ], length: 1, red: null }
+counter.setValue(20);
+// send요청을 보내자.
+// BN { negative: 0, words: [ 20, <1 empty item> ], length: 1, red: null }
+```
+
+# 테스트 코드 작성 및 실행
+
+```sh
+npx truffle test
+
 ```
