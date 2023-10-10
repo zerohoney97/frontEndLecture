@@ -303,9 +303,13 @@ npx truffle migrate
 - CA로 요청을 보내서 call send를 통해 원격 프로시져 실행 가능
 
 ```sh
-npx truffle-console console
-
+npx truffle console 
+#배포한 컨트랙트의 이름이 있다면
+# 컨트랙트 이름 입력시 컨트랙트 조회 가능
+# 이름.address 입력시 CA조회 가능(마지막으로 배포한)
 ```
+
+
 
 - 콘솔창에 코드를 작성해서 call send를 테스트 해볼 수 있다.
 
