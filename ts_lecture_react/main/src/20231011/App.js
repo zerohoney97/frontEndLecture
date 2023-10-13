@@ -9,6 +9,7 @@ function App() {
   const [trainer, setTrainer] = useState([]);
   const [selectedPoketmon, setSelectedPoketmon] = useState();
   const [toAccount, setToAccount] = useState("");
+  const [willChargedETH, setWillchargedETH] = useState("");
   const img = {
     width: "200px",
     height: "200px",
@@ -20,7 +21,7 @@ function App() {
       }
       const poketmon = new web3.eth.Contract(
         abi,
-        "0xb8E555170A3BFF70d923aa04e24C7D08dCCBf955",
+        "0xd5c2457bF82A91EA0FDa4A73f6503Ff584C0eD0e",
         { data: "" }
       );
       setContract(poketmon);
@@ -78,10 +79,33 @@ function App() {
 
   // 포켓몬 트레이드 시스템
   const tradePoketmon = async () => {
+    const [accounts] = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
     await contract.methods.tradePoketmon(toAccount, selectedPoketmon).send({
-      from: user.account,
+      from: accounts,
     });
   };
+
+  const chargeToken = async () => {
+    const [accounts] = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    console.log(willChargedETH);
+    // await contract.methods.chargeToken().send({
+    //   from: accounts,
+    //   value: web3.utils.toWei(willChargedETH, "ether"),
+    //   gas: 200000, // Ensure to set an adequate gas limit.
+    // });
+    await web3.eth.sendTransaction({
+      from: accounts,
+      to: "0xd5c2457bF82A91EA0FDa4A73f6503Ff584C0eD0e",
+      value: web3.utils.toWei(willChargedETH, "ether"),
+      gas: "3000000",
+      data: "0x",
+    });
+  };
+
   // 1.포켓몬 랜덤으로 뽑을 수 있는 버튼
   // 2. 한 번이라도 뽑은 계정만 모으고 어떤 포켓몬을 가지고 있는지 보여주기
   // 3.포켓몬 거래(소유권) 함수 작성
@@ -196,6 +220,16 @@ function App() {
         />
         <button onClick={tradePoketmon}>입양 ㄱㄱ</button>
       </div>
+
+      <h2>토큰이 없으시다고요?</h2>
+      <label>충전충전</label>
+      <input
+        onChange={(e) => {
+          console.log(user.account);
+          setWillchargedETH(e.target.value);
+        }}
+      />
+      <button onClick={chargeToken}>돈 땅바닥에 버리기</button>
     </div>
   );
 }

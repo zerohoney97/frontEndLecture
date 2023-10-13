@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 
 import "./IPERC20.sol";
+
 // 0x37d4fD7Bfc602e59FE9f96D6a0649D13c95294ad
 contract PERC20 is IERC20 {
     // 토큰의 이름
@@ -72,6 +73,12 @@ contract PERC20 is IERC20 {
         balance[msg.sender] -= amount;
         balance[to] += amount;
         return true;
+    }
+
+    function chargeToken() public payable {
+        address CA = address(this);
+        address payable _to = payable(CA);
+        _to.transfer(msg.value);
     }
 
     function approve(

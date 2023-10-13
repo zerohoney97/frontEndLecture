@@ -127,6 +127,13 @@
 			},
 			{
 				"inputs": [],
+				"name": "chargeToken",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "decimals",
 				"outputs": [
 					{
@@ -271,11 +278,11 @@
 			]
 		},
 		"contracts/PERC20.sol": {
-			"keccak256": "0x4ab236b0e9d51cd3190b087c4d6c871e8bc5a33ae02cbb9a2b0b07404f19faf5",
+			"keccak256": "0x7c03b2f217715db182cd99c4e71d6b90011785903621f4ab43ad9fa57f6f2e9d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://dcdf35ef2505cea9cc58627c765e7bd352db38f284bbc62013e45962f3ff8ca1",
-				"dweb:/ipfs/QmWku58dznjBiSpyfYT6DarFEtbdh9h5ZLh4MQ3VjzCaif"
+				"bzz-raw://044b3764b6c7a3acd0ed589007c36997122370d1befcd80aeaec51bbc23e9812",
+				"dweb:/ipfs/QmTPsuuB3zrQnmYHeohGCiz8p8pGzU7PrngncxtHqnJV5U"
 			]
 		}
 	},

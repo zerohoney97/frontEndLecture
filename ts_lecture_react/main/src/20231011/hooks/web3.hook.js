@@ -14,6 +14,7 @@ function useWeb3() {
         .request({ method: "eth_requestAccounts" })
         .then(async ([data]) => {
           const webProvider = new Web3(window.ethereum);
+        
           setWeb3(webProvider);
 
           setUser({

@@ -1,4 +1,4 @@
- [
+[
   {
     "inputs": [],
     "stateMutability": "nonpayable",
@@ -108,6 +108,13 @@
     "name": "buyPoketmon",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "chargeToken",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
