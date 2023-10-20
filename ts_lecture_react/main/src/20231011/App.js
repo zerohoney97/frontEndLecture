@@ -14,6 +14,8 @@ function App() {
     width: "200px",
     height: "200px",
   };
+
+ 
   useEffect(() => {
     if (web3 !== null) {
       if (contract) {
